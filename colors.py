@@ -24,7 +24,7 @@ class Color:
         # Find the nearest matching color from the list
         hex_val = hex(int(self.value, base=16))
 
-        if hex_val in list(colors.keys()):
+        if hex_val in colors:
             return "Exact Match Found: " + colors[hex_val][0]
         else:
             # This is not the correct way of comparing colors
