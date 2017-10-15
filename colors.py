@@ -15,15 +15,21 @@ with open('color_list.csv') as f:
 
 
 class Color:
-    def __init__(self, value: "hexadecimal value of color"):
+    def __init__(self, value: "value of color. default hexadecimal", base: "Optional. d,b,or hex"='hex'):
         self.value = value
+        self.base=base
         if '#' in value:
             self.value = value.replace('#', '0x')
 
     def nearest_match(self):
         # Find the nearest matching color from the list
-        hex_val = hex(int(self.value, base=16))
-
+        if self.base=='d':
+            hex_val = hex(int(self.value))
+        if self.base=='b':
+            hex_val = hex(int(self.value, base=2))
+        else:
+            hex_val = hex(int(self.value, base=16))
+        print(hex_val)
         if hex_val in list(colors.keys()):
             return "Exact Match Found: " + colors[hex_val][0]
         else:
@@ -31,7 +37,7 @@ class Color:
             # See https://en.wikipedia.org/wiki/Color_difference
             color = None
             min = 16777215  # FFFFFF
-            color_int = int(self.value, base=16)
+            color_int = int(hex_val,base=16)
             for item in colors.values():
                 if abs(item[1] - color_int) < min:
                     min = abs(item[1] - color_int)
