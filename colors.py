@@ -1,24 +1,27 @@
 """
 This script tries to find the name of color using a given hex value
-List of colors has been obtained from
+List of colors 'color_list.csv' has been obtained from
 https://en.wikipedia.org/wiki/List_of_colors:_A-F
 https://en.wikipedia.org/wiki/List_of_colors:_G-M
 https://en.wikipedia.org/wiki/List_of_colors:_N-Z
 
+List of colors 'xkcd_colors.csv' has been obtained from
+https://xkcd.com/color/rgb/
 """
+col_list = ['color_list.csv', 'xkcd_colors.csv']
 
 colors = dict()
-with open('color_list.csv') as f:
+with open(col_list[1]) as f:
     lis = [line.split(',') for line in f]
     for hex_val, name in lis:
+        if '#' in hex_val:
+            hex_val = hex_val.replace('#', '0x')     
         colors[hex_val] = (name.rstrip(), int(hex_val, base=16))
 
 
 class Color:
     def __init__(self, value: "hexadecimal value of color"):
         self.value = value
-        if '#' in value:
-            self.value = value.replace('#', '0x')
 
     def nearest_match(self):
         # Find the nearest matching color from the list
