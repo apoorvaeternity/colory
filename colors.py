@@ -29,10 +29,8 @@ class Color:
             color list ('xkcd', 'wiki')
     """
     def __init__(self, value, colset='xkcd'):
-        self.value = value
+        self.value = value.replace('#', '0x') 
         self.colset = colset
-        if '#' in value:
-            value = value.replace('#', '0x')   
 
     def nearest_match(self):
         # Find the nearest matching color from the list
