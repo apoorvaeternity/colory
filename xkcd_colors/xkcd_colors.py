@@ -11,5 +11,6 @@ with open('xkcd_colors.txt') as readf, open('xkcd_colors.csv', 'wb') as writef:
     lis = [line.split('\t', 1) for line in readf]
     for name, hex_val in lis:
         hex_val = hex_val.rstrip('\t\n')
+        hex_val = hex_val.replace('#', '0x') 
         fwriter = csv.writer(writef, delimiter=',')
         fwriter.writerow([hex_val, name])
