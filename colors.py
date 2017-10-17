@@ -25,11 +25,10 @@ class Color:
         # Find the nearest matching color from the list
         if self.base=='d':
             hex_val = hex(int(self.value))
-        if self.base=='b':
+        elif self.base=='b':
             hex_val = hex(int(self.value, base=2))
         else:
             hex_val = hex(int(self.value, base=16))
-        print(hex_val)
         if hex_val in list(colors.keys()):
             return "Exact Match Found: " + colors[hex_val][0]
         else:
