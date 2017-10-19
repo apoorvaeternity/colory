@@ -42,45 +42,31 @@ class Color:
             # This is not the correct way of comparing colors
             # See https://en.wikipedia.org/wiki/Color_difference
             color = None
-            min = 16777215  # FFFFFF
-            color_int = int(self.value, base=16)
+            min_diff = 16777215  # FFFFFF
             for item in colors[self.colset].values():
-                if abs(item[1] - color_int) < min:
-                    min = abs(item[1] - color_int)
+                color_to_compare_hex = "0x{:06x}".format(item[1])
+                if self.euclean_calculate(self.value, color_to_compare_hex) < min_diff:
+                    min_diff = self.euclean_calculate(self.value, color_to_compare_hex)
                     color = item[0]
             return "Nearest Match: " + color
-    def RGB_cartesian_match(self):
-        #eucledian
-        #the formula follows a more human eye appealing aproach of colours
-        color = None
-        min = 16777215  # FFFFFF
-        for item in colors[self.colset].values():
-            colorCompareHex = "0x{:06x}".format(item[1])
-            if self.eucleanCalculate(self.value, colorCompareHex) < min:
-                min = self.eucleanCalculate(self.value, colorCompareHex)
-                color = item[0]
-        return "Nearest Match: " + color
-	
-    def eucleanCalculate(self, C1, C2):
+            
+    def euclean_calculate(self, c1, c2):
         # self un-needed here but python will riase argument exception since it passes it automatically
         # check the last formula in https://en.wikipedia.org/wiki/Color_difference#Euclidean
         #c1 rgb
-        C1 = C1.replace('0x', '')
-        C2 = C2.replace('0x', '')
-        C1_R_int = int(C1[0:2], base=16)
-        C1_G_int = int(C1[2:4], base=16)
-        C1_B_int = int(C1[4:6], base=16)
+        c1 = c1.replace('0x', '')
+        c2 = c2.replace('0x', '')
+        c1_r_int = int(c1[0:2], base=16)
+        c1_g_int = int(c1[2:4], base=16)
+        c1_b_int = int(c1[4:6], base=16)
         #c2 rgb
-        C2_R_int = int(C2[0:2], base=16)
-        C2_G_int = int(C2[2:4], base=16)
-        C2_B_int = int(C2[4:6], base=16)
+        c2_r_int = int(c2[0:2], base=16)
+        c2_g_int = int(c2[2:4], base=16)
+        c2_b_int = int(c2[4:6], base=16)
         #delta square
-        deltaR = (C1_R_int - C2_R_int)**2 
-        deltaG = (C1_G_int - C2_G_int)**2 
-        deltaB = (C1_B_int - C2_B_int)**2
-        r = (C1_R_int + C2_R_int)/2
-        deltaC = ((2 + r/256)*deltaR + 4*deltaG + (2 + (255 - r)/2)*deltaB)
-        return deltaC**0.5
-
-        
-        
+        delta_r = (c1_r_int - c2_r_int)**2 
+        delta_g = (c1_g_int - c2_g_int)**2 
+        delta_b = (c1_b_int - c2_b_int)**2
+        r = (c1_r_int + c2_r_int)/2
+        delta_c = ((2 + r/256)*delta_r + 4*delta_g + (2 + (255 - r)/2)*delta_b)
+        return delta_c**0.5
