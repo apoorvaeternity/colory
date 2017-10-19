@@ -51,6 +51,7 @@ class Color:
             return "Nearest Match: " + color
     def RGB_cartesian_match(self):
         #eucledian
+        #the formula follows a more human eye appealing aproach of colours
         color = None
         min = 16777215  # FFFFFF
         for item in colors[self.colset].values():
