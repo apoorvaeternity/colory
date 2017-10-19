@@ -20,31 +20,29 @@ for key, fname in col_files.items():
 
 
 class Color:
-    """
-    Fetches the name of the nearest matching color to a hexadecimal color string.
-    
-    value: str
-            hex color name
-    cols: str, optional (default='xkcd')
-            color list ('xkcd', 'wiki')
-    """
-    def __init__(self, value, colset='xkcd'):
-        self.value = value.replace('#', '0x') 
-        self.colset = colset
+    def __init__(self, value: "value of color. default hexadecimal", base: "Optional. d,b,or hex"='hex'):
+        self.value = value
+        self.base = base
+        if '#' in value:
+            self.value = value.replace('#', '0x')
 
     def nearest_match(self):
+        if self.base=='d':
+            hex_val = hex(int(self.value))
+        elif self.base=='b':
+            hex_val = hex(int(self.value, base=2))
+        elif self.base=='hex':
+            hex_val = hex(int(self.value, base=16))
         # Find the nearest matching color from the list
-        hex_val = hex(int(self.value, base=16))
-
-        if hex_val in colors[self.colset]:
-            return "Exact Match Found: " + colors[self.colset][hex_val][0]
+        if hex_val in list(colors.keys()):
+            return "Exact Match Found: " + colors[hex_val][0]
         else:
             # This is not the correct way of comparing colors
             # See https://en.wikipedia.org/wiki/Color_difference
             color = None
             min = 16777215  # FFFFFF
             color_int = int(self.value, base=16)
-            for item in colors[self.colset].values():
+            for item in colors.values():
                 if abs(item[1] - color_int) < min:
                     min = abs(item[1] - color_int)
                     color = item[0]

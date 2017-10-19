@@ -1,5 +1,5 @@
 # Colory
-> Fetches color name using hex value.
+> Fetches color name using hex, decimal, or binary value.
 
 
 ## Usage example
