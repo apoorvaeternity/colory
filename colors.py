@@ -16,7 +16,7 @@ for key, fname in col_files.items():
     with open(fname) as f:
         lis = [line.split(',') for line in f]
         for hex_val, name in lis:
-            colors[key][hex_val] = (name.rstrip(), int(hex_val, base=16))
+            colors[key][hex_val] = name.rstrip()
 
 
 class Color:
@@ -38,17 +38,17 @@ class Color:
         hex_val = hex(int(self.value, base=16))
 
         if hex_val in colors[self.colset]:
-            return "Exact Match Found: " + colors[self.colset][hex_val][0]
+            return "Exact Match Found: " + colors[self.colset][hex_val]
         else:
             # This is not the correct way of comparing colors
             # See https://en.wikipedia.org/wiki/Color_difference
             color = None
             min_diff = 16777215  # FFFFFF
-            for item in colors[self.colset].values():
-                color_to_compare_hex = "0x{:06x}".format(item[1])
+            for hex_color, color_name in colors[self.colset].items():
+                color_to_compare_hex = hex_color
                 if self.euclidean_calculate(self.value, color_to_compare_hex) < min_diff:
                     min_diff = self.euclidean_calculate(self.value, color_to_compare_hex)
-                    color = item[0]
+                    color = color_name
             return "Nearest Match: " + color
 
     def euclidean_calculate(self, c1, c2):
