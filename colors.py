@@ -33,6 +33,12 @@ class Color:
         self.value = value.replace('#', '0x')
         self.colset = colset
 
+    def __str__(self):
+        return self.value
+
+    def __repr__(self):
+        return self.value
+
     def nearest_match(self):
         # Find the nearest matching color from the list
         hex_val = hex(int(self.value, base=16))
@@ -54,19 +60,30 @@ class Color:
     def euclidean_calculate(self, c1, c2):
         # Check the last formula in https://en.wikipedia.org/wiki/Color_difference#Euclidean
         # c1 rgb
-        c1 = c1.replace('0x', '')
-        c2 = c2.replace('0x', '')
-        c1_r_int = int(c1[0:2], base=16)
-        c1_g_int = int(c1[2:4], base=16)
-        c1_b_int = int(c1[4:6], base=16)
-        # c2 rgb
-        c2_r_int = int(c2[0:2], base=16)
-        c2_g_int = int(c2[2:4], base=16)
-        c2_b_int = int(c2[4:6], base=16)
+        c1 = self.hex_to_rgb(c1)
+        c2 = self.hex_to_rgb(c2)
         # delta square
-        delta_r = (c1_r_int - c2_r_int) ** 2
-        delta_g = (c1_g_int - c2_g_int) ** 2
-        delta_b = (c1_b_int - c2_b_int) ** 2
-        r = (c1_r_int + c2_r_int) / 2
+        delta_r = (c1[0] - c2[0]) ** 2
+        delta_g = (c1[1] - c2[1]) ** 2
+        delta_b = (c1[2] - c2[2]) ** 2
+        r = (c1[0] + c2[0]) / 2
         delta_c = ((2 + r / 256) * delta_r + 4 * delta_g + (2 + (255 - r) / 2) * delta_b)
         return delta_c ** 0.5
+
+    def hex_to_rgb(self, hex_value):
+        # This method takes in a hex value and returns a corresponding tuple in r g b format
+        hex_value = hex_value.replace('0x', '')
+        r = int(hex_value[0:2], base=16)
+        g = int(hex_value[2:4], base=16)
+        b = int(hex_value[4:6], base=16)
+        return (r, g, b)
+
+    def mix(self, other_color):
+        # Mix the current color of object with some other color and return the hex value
+        color_one = self.hex_to_rgb(self.value)
+        color_two = self.hex_to_rgb(str(other_color).replace('#', '0x'))
+        mixed_color = ((color_one[0] + color_two[0]) // 2,
+                       (color_one[1] + color_two[1]) // 2,
+                       (color_one[2] + color_two[2]) // 2)
+        mixed_color_hex = "0x{0:02x}{1:02x}{2:02x}".format(mixed_color[0], mixed_color[1], mixed_color[2])
+        self.value = mixed_color_hex
