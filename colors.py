@@ -9,7 +9,7 @@ List of colors 'xkcd_colors.csv' has been obtained from
 https://xkcd.com/color/rgb/
 """
 
-col_files = {'wiki': 'wiki_colors.csv', 'xkcd': 'xkcd_colors/xkcd_colors.csv'}
+col_files = {'wiki': 'wiki_colors/wiki_colors.csv', 'xkcd': 'xkcd_colors/xkcd_colors.csv'}
 # read in both color lists
 colors = {key: {} for key in col_files}
 for key, fname in col_files.items():
