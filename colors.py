@@ -47,7 +47,7 @@ class Color:
             color_to_compare_hex = hex_color
             if self.euclidean_calculate(self.value, color_to_compare_hex) < min_diff:
                 min_diff = self.euclidean_calculate(self.value, color_to_compare_hex)
-                color = color_name
+                color = color_name.title()
         return "Nearest Match: " + color
 
     def euclidean_calculate(self, c1, c2):
