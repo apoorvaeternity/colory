@@ -9,16 +9,19 @@
 
 >>> from colors import Color
 >>> a=Color('#ffffff')
->>> a.nearest_match()
-'Exact Match Found: white'
 >>> b=Color('#000000')
+>>> a.nearest_match()
+'Nearest Match: white'
 >>> b.nearest_match()
 'Nearest Match: black'
 
-Mix colors
+Mix Color
 >>> a.mix(b)
 >>> a.nearest_match()
 'Nearest Match: medium grey'
+>>> a
+0x7f7f7f
+
 
 ```
 

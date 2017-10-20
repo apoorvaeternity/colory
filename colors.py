@@ -41,26 +41,20 @@ class Color:
 
     def nearest_match(self):
         # Find the nearest matching color from the list
-        hex_val = hex(int(self.value, base=16))
-
-        if hex_val in colors[self.colset]:
-            return "Exact Match Found: " + colors[self.colset][hex_val]
-        else:
-            # This is not the correct way of comparing colors
-            # See https://en.wikipedia.org/wiki/Color_difference
-            color = None
-            min_diff = 16777215  # FFFFFF
-            for hex_color, color_name in colors[self.colset].items():
-                color_to_compare_hex = hex_color
-                if self.euclidean_calculate(self.value, color_to_compare_hex) < min_diff:
-                    min_diff = self.euclidean_calculate(self.value, color_to_compare_hex)
-                    color = color_name
-            return "Nearest Match: " + color
+        color = None
+        min_diff = 16777215  # FFFFFF
+        for hex_color, color_name in colors[self.colset].items():
+            color_to_compare_hex = hex_color
+            if self.euclidean_calculate(self.value, color_to_compare_hex) < min_diff:
+                min_diff = self.euclidean_calculate(self.value, color_to_compare_hex)
+                color = color_name
+        return "Nearest Match: " + color
 
     def euclidean_calculate(self, c1, c2):
         # Check the last formula in https://en.wikipedia.org/wiki/Color_difference#Euclidean
         # c1 rgb
         c1 = self.hex_to_rgb(c1)
+        # c2 rgb
         c2 = self.hex_to_rgb(c2)
         # delta square
         delta_r = (c1[0] - c2[0]) ** 2
