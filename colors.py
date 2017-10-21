@@ -25,11 +25,11 @@ class Color:
     
     value: str
             hex color name
-    cols: str, optional (default='xkcd')
+    cols: str, optional (default='wiki')
             color list ('xkcd', 'wiki')
     """
 
-    def __init__(self, value, colset='xkcd'):
+    def __init__(self, value, colset='wiki'):
         self.value = value.replace('#', '0x')
         self.colset = colset
 
@@ -48,7 +48,7 @@ class Color:
             if self.euclidean_calculate(self.value, color_to_compare_hex) < min_diff:
                 min_diff = self.euclidean_calculate(self.value, color_to_compare_hex)
                 color = color_name.title()
-        return "Nearest Match: " + color
+        return color
 
     def euclidean_calculate(self, c1, c2):
         # Check the last formula in https://en.wikipedia.org/wiki/Color_difference#Euclidean
