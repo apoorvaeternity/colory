@@ -32,6 +32,7 @@ class Color:
     def __init__(self, value, colset='wiki'):
         self.value = value.replace('#', '0x')
         self.colset = colset
+        self.name = self.nearest_match()
 
     def __str__(self):
         return self.value
@@ -57,11 +58,11 @@ class Color:
         # c2 rgb
         c2 = self.hex_to_rgb(c2)
         # delta square
-        delta_r = (c1[0] - c2[0]) ** 2
-        delta_g = (c1[1] - c2[1]) ** 2
-        delta_b = (c1[2] - c2[2]) ** 2
+        delta_r = (c1[0] - c2[0])
+        delta_g = (c1[1] - c2[1])
+        delta_b = (c1[2] - c2[2])
         r = (c1[0] + c2[0]) / 2
-        delta_c = ((2 + r / 256) * delta_r + 4 * delta_g + (2 + (255 - r) / 2) * delta_b)
+        delta_c = ((2 + r / 256) * delta_r ** 2 + 4 * delta_g ** 2 + (2 + (255 - r) / 256) * delta_b ** 2)
         return delta_c ** 0.5
 
     def hex_to_rgb(self, hex_value):
@@ -73,7 +74,7 @@ class Color:
         return (r, g, b)
 
     def mix(self, other_color):
-        # Mix the current color of object with some other color and return the hex value
+        # Mix the current color of object with some other color. Updates the hex value of the object.
         color_one = self.hex_to_rgb(self.value)
         color_two = self.hex_to_rgb(str(other_color).replace('#', '0x'))
         mixed_color = ((color_one[0] + color_two[0]) // 2,
@@ -81,3 +82,4 @@ class Color:
                        (color_one[2] + color_two[2]) // 2)
         mixed_color_hex = "0x{0:02x}{1:02x}{2:02x}".format(mixed_color[0], mixed_color[1], mixed_color[2])
         self.value = mixed_color_hex
+        self.name = self.nearest_match()

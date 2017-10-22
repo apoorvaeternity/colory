@@ -6,21 +6,17 @@
 
 
 ```python
-
->>> from colors import Color
->>> a=Color('#ffffff')
->>> b=Color('#000000')
->>> a.nearest_match()
-'Nearest Match: white'
->>> b.nearest_match()
-'Nearest Match: black'
+Choose between xkcd or wiki color lists.
+>>> a=Color('#000000','xkcd')
+>>> a.name
+'Black'
 
 Mix Color
->>> a.mix(b)
->>> a.nearest_match()
-'Nearest Match: medium grey'
+>>> a.mix('#FFFFFF')
 >>> a
 0x7f7f7f
+>>> a.name
+'Medium Grey'
 
 
 ```
