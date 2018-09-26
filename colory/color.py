@@ -8,8 +8,11 @@ https://en.wikipedia.org/wiki/List_of_colors:_N-Z
 List of colors 'xkcd_colors.csv' has been obtained from
 https://xkcd.com/color/rgb/
 """
+import os
 
-col_files = {'wiki': 'wiki_colors/wiki_colors.csv', 'xkcd': 'xkcd_colors/xkcd_colors.csv'}
+path = os.path.dirname(__file__)
+col_files = {'wiki': path+'/wiki_colors/wiki_colors.csv',
+             'xkcd': path+'/xkcd_colors/xkcd_colors.csv'}
 # read in both color lists
 colors = {key: {} for key in col_files}
 for key, fname in col_files.items():
@@ -22,7 +25,7 @@ for key, fname in col_files.items():
 class Color:
     """
     Fetches the name of the nearest matching color to a hexadecimal color string.
-    
+
     value: str
             hex color name
     cols: str, optional (default='wiki')

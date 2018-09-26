@@ -3,9 +3,12 @@
 
 
 ## Usage example
-
+```bash
+pip install colory
+```
 
 ```python
+>>> from colory.color import Color
 Choose between xkcd or wiki color lists.
 >>> a=Color('#000000','xkcd')
 >>> a.name
