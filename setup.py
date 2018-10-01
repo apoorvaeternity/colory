@@ -13,7 +13,7 @@ setup(
     description='A python package to find nearest name of colors using their hex value.',
     url='https://github.com/apoorvaeternity/colory',
     author='Apoorva Pandey',
-    author_email='apoorvaeternity@gmail.com',
+    author_email='apoorvapandey365@gmail.com',
     python_requires='>=3',
     classifiers=[
         'Intended Audience :: Developers',
