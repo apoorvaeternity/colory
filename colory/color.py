@@ -69,7 +69,7 @@ class Color:
         return delta_c ** 0.5
 
     def hex_to_rgb(self, hex_value):
-        # This method takes in a hex value and returns a corresponding tuple in r g b format
+        # This method takes a hex value as an input and returns a corresponding tuple in r g b format
         hex_value = hex_value.replace('0x', '')
         r = int(hex_value[0:2], base=16)
         g = int(hex_value[2:4], base=16)
