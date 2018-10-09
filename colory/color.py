@@ -9,10 +9,11 @@ List of colors 'xkcd_colors.csv' has been obtained from
 https://xkcd.com/color/rgb/
 """
 import os
+import tkinter
 
 path = os.path.dirname(__file__)
-col_files = {'wiki': path+'/wiki_colors/wiki_colors.csv',
-             'xkcd': path+'/xkcd_colors/xkcd_colors.csv'}
+col_files = {'wiki': path + '/wiki_colors/wiki_colors.csv',
+             'xkcd': path + '/xkcd_colors/xkcd_colors.csv'}
 # read in both color lists
 colors = {key: {} for key in col_files}
 for key, fname in col_files.items():
@@ -76,6 +77,11 @@ class Color:
         b = int(hex_value[4:6], base=16)
         return (r, g, b)
 
+    def inverse(self):
+        rgb = self.hex_to_rgb(self.value)
+        hex_value = "0x{0:02x}{1:02x}{2:02x}".format(255 - rgb[0], 255 - rgb[1], 255 - rgb[2])
+        return hex_value
+
     def mix(self, other_color):
         # Mix the current color of object with some other color. Updates the hex value of the object.
         color_one = self.hex_to_rgb(self.value)
@@ -86,3 +92,14 @@ class Color:
         mixed_color_hex = "0x{0:02x}{1:02x}{2:02x}".format(mixed_color[0], mixed_color[1], mixed_color[2])
         self.value = mixed_color_hex
         self.name = self.nearest_match()
+
+    def show(self):
+        root = tkinter.Tk()
+        root.title('Colory')
+        root.configure(bg=self.value.replace('0x', '#'))
+        hex_value = self.value.replace('0x', '#')
+        foreground_color = self.inverse().replace('0x', '#')
+        tkinter.Label(root, background=hex_value, justify="center",
+                      text="{}\n{}\n({})".format(hex_value, self.name, self.colset),
+                      padx=100, pady=100, foreground=foreground_color).pack()
+        root.mainloop()

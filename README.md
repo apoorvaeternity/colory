@@ -21,6 +21,9 @@ Mix Color
 >>> a.name
 'Medium Grey'
 
+Show color in a window
+>>> a.show()
+
 
 ```
 
