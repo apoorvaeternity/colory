@@ -36,13 +36,16 @@ class Color:
     def __init__(self, value, colset='wiki'):
         self.value = value.replace('#', '0x')
         self.colset = colset
-        self.name = self.nearest_match()
 
     def __str__(self):
         return self.value
 
     def __repr__(self):
         return self.value
+
+    @property
+    def name(self):
+        return self.nearest_match()
 
     def nearest_match(self):
         # Find the nearest matching color from the list
@@ -91,7 +94,6 @@ class Color:
                        (color_one[2] + color_two[2]) // 2)
         mixed_color_hex = "0x{0:02x}{1:02x}{2:02x}".format(mixed_color[0], mixed_color[1], mixed_color[2])
         self.value = mixed_color_hex
-        self.name = self.nearest_match()
 
     def show(self):
         root = tkinter.Tk()
@@ -103,3 +105,4 @@ class Color:
                       text="{}\n{}\n({})".format(hex_value, self.name, self.colset),
                       padx=100, pady=100, foreground=foreground_color).pack()
         root.mainloop()
+
